@@ -13,7 +13,7 @@ class MyCourse extends Model
         'course_id', 'user_id'
     ];
 
-    public function courses()
+    public function course()
     {
         return $this->belongsTo('App\Models\Course');
     }

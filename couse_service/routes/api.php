@@ -6,11 +6,8 @@ use App\Http\Controllers\CourseImageController;
 use App\Http\Controllers\LessonController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MentorController;
+use App\Http\Controllers\MyCourseController;
 use App\Http\Controllers\ReviewController;
-
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 // mentors
 Route::get('/mentor', [MentorController::class, 'index']);
@@ -46,4 +43,6 @@ Route::post('/review', [ReviewController::class, 'store']);
 Route::patch('/review/{review}', [ReviewController::class, 'update']);
 Route::delete('/review/{review}', [ReviewController::class, 'destroy']);
 
-// 
+// my courses
+Route::get('/mycourse', [MyCourseController::class, 'index']);
+Route::post('/mycourse', [MyCourseController::class, 'store']);
