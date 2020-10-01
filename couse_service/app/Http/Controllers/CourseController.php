@@ -60,7 +60,7 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        $course->load('mentor', 'images');
+        $course->load('mentor', 'images', 'reviews');
 
         return response()->json([
             'status' => 'success',

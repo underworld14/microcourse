@@ -15,7 +15,7 @@ class ReviewController extends Controller
         $rules = [
             "user_id" => "required|integer",
             "course_id" => "required|integer",
-            "rating" => "required|integer",
+            "rating" => "required|integer|min:1|max:5",
             "note" => "string"
         ];
 
@@ -35,6 +35,16 @@ class ReviewController extends Controller
             ], 404);
         }
 
+        $user = getUser($request['user_id']);
+        if ($user['status'] === 'error') {
+            return errResponse($user['status_code'], $user['message']);
+        }
+
+        $isExist = Review::where('course_id', '=', $request['course_id'])->where('user_id', '=', $request['user_id'])->exists();
+        if ($isExist) {
+            return errResponse(409, 'user already taken this course');
+        }
+
         $review = Review::create($request->all());
 
         return response()->json([
@@ -47,8 +57,6 @@ class ReviewController extends Controller
     public function update(Request $request, Review $review)
     {
         $rules = [
-            "user_id" => "integer",
-            "course_id" => "integer",
             "rating" => "integer",
             "note" => "string"
         ];
@@ -61,17 +69,7 @@ class ReviewController extends Controller
             ], 400);
         }
 
-        if (isset($request['course_id'])) {
-            $course = Course::find($request['course_id']);
-            if (!$course) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'course not found !'
-                ], 404);
-            }
-        }
-
-        $review->fill($request->all());
+        $review->fill($request->only('rating', 'note'));
         $review->save();
 
         return response()->json([
