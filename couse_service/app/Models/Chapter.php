@@ -13,6 +13,11 @@ class Chapter extends Model
         'course_id', 'name'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:m:s',
+        'updated_at' => 'datetime:Y-m-d H:m:s'
+    ];
+
     public function course()
     {
         return $this->belongsTo('App\Models\Course');

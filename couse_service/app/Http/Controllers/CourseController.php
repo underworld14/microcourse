@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Mentor;
+use App\Models\MyCourse;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -60,11 +62,29 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        $course->load('mentor', 'images', 'reviews');
+        $course->load(['mentor:id,name,photo', 'chapters.lessons', 'images']);
+        $totalStudent = MyCourse::where('course_id', '=', $course->id)->count();
+        $course['total_student'] = $totalStudent;
+
+        $reviews = Review::where('course_id', '=', $course->id)->get()->toArray();
+        if (count($reviews) > 0) {
+            $userIds = array_column($reviews, 'user_id');
+            $user = getUsers($userIds);
+            if ($user['status'] === 'error') {
+                $reviews = [];
+            }
+
+            foreach ($reviews as $key => $review) {
+                $userIndex = array_search($review['user_id'], array_column($user['data'], 'id'));
+                $reviews[$key]['users'] = $user['data'][$userIndex];
+            }
+        }
+
+        $course['reviews'] = $reviews;
 
         return response()->json([
             'status' => 'success',
-            'data' => $course
+            'data' => $course,
         ]);
     }
 

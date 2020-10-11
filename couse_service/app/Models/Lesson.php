@@ -13,6 +13,11 @@ class Lesson extends Model
         'chapter_id', 'name', 'video'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:m:s',
+        'updated_at' => 'datetime:Y-m-d H:m:s'
+    ];
+
     public function chapter()
     {
         return $this->belongsTo('App\Models\Chapter');
