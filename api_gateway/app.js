@@ -3,6 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+const authJwt = require("./middleware/authJwt");
 const errorHandler = require("./middleware/error");
 const Exception = require("./handler/exception");
 const indexRouter = require("./routes/index");
@@ -24,8 +25,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/media", mediaRouter);
 app.use("/auth", authRouter);
-app.use("/user", userRouter);
-app.use("/mentor", mentorRouter);
+app.use("/user", authJwt, userRouter);
+app.use("/mentor", authJwt, mentorRouter);
 
 // app.use("/courses", coursesRouter);
 // app.use("/paymentRouter", paymentRouter);
