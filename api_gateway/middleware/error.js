@@ -1,4 +1,4 @@
-module.exports = (err, req, res) => {
+module.exports = (err, req, res, next) => {
   const code = err.statusCode || 500;
   const status = err.status || "error";
 
@@ -7,8 +7,6 @@ module.exports = (err, req, res) => {
       .status(500)
       .json({ status: "error", message: "service unavailable" });
   }
-
-  console.log(err);
 
   if (err.name === "UnauthorizedError") {
     return res.status(401).json({
