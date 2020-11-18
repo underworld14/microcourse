@@ -12,7 +12,7 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const mentorRouter = require("./routes/mentor");
 const coursesRouter = require("./routes/course");
-// const paymentRouter = require("./routes/payment");
+const chapterRouter = require("./routes/chapter");
 
 const app = express();
 
@@ -28,6 +28,7 @@ app.use("/auth", authRouter);
 app.use("/user", authJwt, userRouter);
 app.use("/mentor", authJwt, mentorRouter);
 app.use("/course", coursesRouter);
+app.use("/chapter", authJwt, chapterRouter);
 // app.use("/paymentRouter", paymentRouter);
 
 app.all("*", (req, res, next) => {
