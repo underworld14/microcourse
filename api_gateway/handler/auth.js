@@ -1,6 +1,6 @@
-const apiAdapter = require("../apiAdapter");
-const catchAsync = require("../catchAsync");
-const jwt = require("../../utils/jwt");
+const apiAdapter = require("./apiAdapter");
+const catchAsync = require("./catchAsync");
+const jwt = require("../utils/jwt");
 
 const api = apiAdapter(process.env.URL_USER_SERVICE);
 

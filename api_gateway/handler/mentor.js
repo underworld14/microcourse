@@ -1,11 +1,10 @@
-const catchAsync = require("../catchAsync");
-const apiAdapter = require("../apiAdapter");
+const catchAsync = require("./catchAsync");
+const apiAdapter = require("./apiAdapter");
 
 const courseApi = apiAdapter(process.env.URL_COURSE_SERVICE);
 
 exports.index = catchAsync(async (req, res) => {
   const mentors = await courseApi.get("/api/mentor", { params: req.query });
-  console.log(mentors);
   return res.status(mentors.status).json(mentors.data);
 });
 

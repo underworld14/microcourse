@@ -1,5 +1,5 @@
-const apiAdapter = require("../apiAdapter");
-const catchAsync = require("../catchAsync");
+const apiAdapter = require("./apiAdapter");
+const catchAsync = require("./catchAsync");
 
 const api = apiAdapter(process.env.URL_MEDIA_SERVICE);
 

@@ -10,8 +10,8 @@ const indexRouter = require("./routes/index");
 const mediaRouter = require("./routes/media");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
-const mentorRouter = require("./routes/mentors");
-// const coursesRouter = require("./routes/courses");
+const mentorRouter = require("./routes/mentor");
+const coursesRouter = require("./routes/course");
 // const paymentRouter = require("./routes/payment");
 
 const app = express();
@@ -27,8 +27,7 @@ app.use("/media", mediaRouter);
 app.use("/auth", authRouter);
 app.use("/user", authJwt, userRouter);
 app.use("/mentor", authJwt, mentorRouter);
-
-// app.use("/courses", coursesRouter);
+app.use("/course", coursesRouter);
 // app.use("/paymentRouter", paymentRouter);
 
 app.all("*", (req, res, next) => {
